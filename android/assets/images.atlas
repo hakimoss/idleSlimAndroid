@@ -1,0 +1,580 @@
+
+images.png
+size: 8192, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+DmgIcon
+  rotate: false
+  xy: 5696, 202
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+equipementIcon
+  rotate: false
+  xy: 835, 161
+  size: 33, 29
+  orig: 33, 29
+  offset: 0, 0
+  index: -1
+farmIcon
+  rotate: false
+  xy: 6620, 461
+  size: 33, 29
+  orig: 33, 29
+  offset: 0, 0
+  index: -1
+flamme1Gauche
+  rotate: false
+  xy: 5600, 426
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flamme1Mort
+  rotate: false
+  xy: 5600, 362
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flamme2Gauche
+  rotate: false
+  xy: 5728, 426
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flamme2Mort
+  rotate: false
+  xy: 5664, 362
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flamme3Gauche
+  rotate: false
+  xy: 5600, 234
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flamme3Mort
+  rotate: false
+  xy: 5728, 298
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+flamme4Gauche
+  rotate: false
+  xy: 5664, 298
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+goldIcon
+  rotate: false
+  xy: 675, 158
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+golem3Gauche
+  rotate: false
+  xy: 0, 128
+  size: 71, 62
+  orig: 71, 62
+  offset: 0, 0
+  index: -1
+golem1Gauche
+  rotate: false
+  xy: 0, 128
+  size: 71, 62
+  orig: 71, 62
+  offset: 0, 0
+  index: -1
+golem2Gauche
+  rotate: false
+  xy: 0, 128
+  size: 71, 62
+  orig: 71, 62
+  offset: 0, 0
+  index: -1
+golem4Gauche
+  rotate: false
+  xy: 0, 128
+  size: 71, 62
+  orig: 71, 62
+  offset: 0, 0
+  index: -1
+hearthIcon
+  rotate: false
+  xy: 771, 158
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hearthRegenIcon
+  rotate: false
+  xy: 6588, 458
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hero1Droite
+  rotate: false
+  xy: 5728, 249
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+hero1Attaque
+  rotate: false
+  xy: 5728, 249
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroHerbe1Attaque
+  rotate: false
+  xy: 5728, 249
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroHerbe1Droite
+  rotate: false
+  xy: 5728, 249
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+hero2Attaque
+  rotate: false
+  xy: 311, 141
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+hero2Droite
+  rotate: false
+  xy: 131, 141
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroHerbe2Droite
+  rotate: false
+  xy: 131, 141
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+hero2Mort
+  rotate: false
+  xy: 5856, 441
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+hero1Mort
+  rotate: false
+  xy: 5856, 441
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+hero3Mort
+  rotate: false
+  xy: 5856, 441
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+hero3Attaque
+  rotate: false
+  xy: 6336, 441
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+hero3Droite
+  rotate: false
+  xy: 5792, 328
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroHerbe3Droite
+  rotate: false
+  xy: 5792, 328
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+hero4Attaque
+  rotate: false
+  xy: 6276, 441
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroHerbe4Attaque
+  rotate: false
+  xy: 6276, 441
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+hero4Droite
+  rotate: false
+  xy: 5916, 441
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroHerbe4Droite
+  rotate: false
+  xy: 5916, 441
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+hero5Attaque
+  rotate: false
+  xy: 251, 141
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroHerbe5Attaque
+  rotate: false
+  xy: 251, 141
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroEau1Attaque
+  rotate: false
+  xy: 191, 141
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroEau1Droite
+  rotate: false
+  xy: 191, 141
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroEau2Droite
+  rotate: false
+  xy: 6216, 441
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroEau3Droite
+  rotate: false
+  xy: 551, 141
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroEau4Attaque
+  rotate: false
+  xy: 431, 141
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroEau4Droite
+  rotate: false
+  xy: 5976, 441
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroEau5Attaque
+  rotate: false
+  xy: 6156, 441
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroFeu1Attaque
+  rotate: false
+  xy: 6096, 441
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroFeu1Droite
+  rotate: false
+  xy: 6096, 441
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroFeu2Droite
+  rotate: false
+  xy: 371, 141
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroFeu3Droite
+  rotate: false
+  xy: 71, 141
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroFeu4Attaque
+  rotate: false
+  xy: 491, 141
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroFeu4Droite
+  rotate: false
+  xy: 5792, 377
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+heroFeu5Attaque
+  rotate: false
+  xy: 6036, 441
+  size: 60, 49
+  orig: 60, 49
+  offset: 0, 0
+  index: -1
+inventoryIcon
+  rotate: false
+  xy: 6653, 461
+  size: 33, 29
+  orig: 33, 29
+  offset: 0, 0
+  index: -1
+menuEquipement
+  rotate: false
+  xy: 3200, 190
+  size: 800, 300
+  orig: 800, 300
+  offset: 0, 0
+  index: -1
+menuFarm
+  rotate: false
+  xy: 800, 190
+  size: 800, 300
+  orig: 800, 300
+  offset: 0, 0
+  index: -1
+menuInventory
+  rotate: false
+  xy: 2400, 190
+  size: 800, 300
+  orig: 800, 300
+  offset: 0, 0
+  index: -1
+menuRelic
+  rotate: false
+  xy: 0, 190
+  size: 800, 300
+  orig: 800, 300
+  offset: 0, 0
+  index: -1
+menuStats
+  rotate: false
+  xy: 4000, 190
+  size: 800, 300
+  orig: 800, 300
+  offset: 0, 0
+  index: -1
+oeil1Gauche
+  rotate: false
+  xy: 5728, 362
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+oeil1Mort
+  rotate: false
+  xy: 5600, 298
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+oeil2Gauche
+  rotate: false
+  xy: 5792, 426
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+oeil2Mort
+  rotate: false
+  xy: 5664, 234
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+oeil3Gauche
+  rotate: false
+  xy: 0, 64
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+oeil3Mort
+  rotate: false
+  xy: 5664, 426
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+oeil4Gauche
+  rotate: false
+  xy: 0, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+potionIcon
+  rotate: false
+  xy: 5728, 217
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+relicEauIcon
+  rotate: false
+  xy: 5600, 202
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+relicFeuIcon
+  rotate: false
+  xy: 739, 158
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+relicHerbeIcon
+  rotate: false
+  xy: 6556, 458
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+relicIcon
+  rotate: false
+  xy: 868, 161
+  size: 33, 29
+  orig: 33, 29
+  offset: 0, 0
+  index: -1
+runeDmgBlue
+  rotate: false
+  xy: 6492, 458
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+runeDmgGreen
+  rotate: false
+  xy: 5664, 202
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+runeDmgOrange
+  rotate: false
+  xy: 707, 158
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+runeDmgPurple
+  rotate: false
+  xy: 611, 158
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+runeDmgWhite
+  rotate: false
+  xy: 5632, 202
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+sPotionBlue
+  rotate: false
+  xy: 643, 158
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+sPotionGreen
+  rotate: false
+  xy: 6524, 458
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+sPotionOrange
+  rotate: false
+  xy: 6428, 458
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+sPotionPurple
+  rotate: false
+  xy: 803, 158
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+sPotionWhite
+  rotate: false
+  xy: 6460, 458
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+shieldIcon
+  rotate: false
+  xy: 6396, 458
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+stageForest
+  rotate: false
+  xy: 4800, 190
+  size: 800, 300
+  orig: 800, 300
+  offset: 0, 0
+  index: -1
+stageLava
+  rotate: false
+  xy: 1600, 190
+  size: 800, 300
+  orig: 800, 300
+  offset: 0, 0
+  index: -1
+statsIcon
+  rotate: false
+  xy: 5792, 299
+  size: 33, 29
+  orig: 33, 29
+  offset: 0, 0
+  index: -1
