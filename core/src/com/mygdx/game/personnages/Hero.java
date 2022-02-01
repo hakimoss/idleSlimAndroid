@@ -35,6 +35,8 @@ public class Hero extends Personnages{
 
     private int compteurHealthRegen;
 
+    public Combat combat;
+
     //public Item[] itemInInventory = new Item[10];
 
     //public Item[] equipedItem = new Item[2];
@@ -154,26 +156,22 @@ public class Hero extends Personnages{
 
     public void setHealthRegen(int healthRegen) {this.healthRegen = healthRegen;}
 
-    public void contact(Personnages personnage, float deltaTime) {
+    public void contact(Personnages personnage) {
 
         if(personnage.isVivant() == true) {
 
             if(super.contactAvant(personnage) == true || super.contactArriere(personnage) ==  true ) {
-
                 Main.scene.setDx(0);
                 this.libre = false;
                 this.setMarche(false);
-
-
-                if(this.isEnCombat() == false) {
-                    this.setEnCombat(true);
-                    Combat combat = new Combat();
-                    combat.combatEntrePersonnages(this, personnage, deltaTime);
-
-                }
-
-
+                this.setEnCombat(true);
             }
+            if(this.isEnCombat() == true) {
+                Combat combat2 = new Combat();
+                this.combat = combat2;
+                this.combat.combatEntrePerso(this, personnage);
+            }
+
         }
 
     }
@@ -237,7 +235,6 @@ public class Hero extends Personnages{
             }
 
         }
-        System.out.println(str);
         texture = textureAtlas.findRegion(str);
         return texture;
 

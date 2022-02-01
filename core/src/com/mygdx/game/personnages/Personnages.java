@@ -17,6 +17,7 @@ public class Personnages {
     protected boolean vivant;
     protected boolean disparait;
     protected boolean versDroite;
+    public boolean hitDone = false;
 
     protected int health;
     protected int dmg;
@@ -39,6 +40,7 @@ public class Personnages {
         this.vivant = true;
         this.versDroite = true;
         this.disparait = false;
+
 
         textureAtlas = new TextureAtlas("images.atlas");
 
@@ -154,6 +156,7 @@ public class Personnages {
         String str;
         TextureRegion texture;
 
+
         this.accumulatorTime = this.accumulatorTime + deltaTime;
 
         if(this.accumulatorTime >= 0.15) {
@@ -162,7 +165,10 @@ public class Personnages {
         }
 
         if(this.compteurCombat >=5) {
+
             this.compteurCombat = 0;
+            this.hitDone = true;
+
         }
 
         if(this.compteurCombat == 4) {
@@ -171,6 +177,7 @@ public class Personnages {
             str = nom+"4Attaque";
         } else {
             str = nom+"5Attaque";
+
         }
 
         texture = textureAtlas.findRegion(str);
@@ -178,31 +185,28 @@ public class Personnages {
 
     }
 
-//    public Image mortImg(String nom, int frequence) {
-//        String str;
-//        Image img;
-//        ImageIcon ico;
-//        ActionListener listener = new TimeListener();
-//        Timer timer = new Timer(1000, listener);
-//        timer.start();
-//        this.compteurMort++;
-//
-//
-//
-//        if(this.compteurMort == 1) {
-//            str = "/images/"+nom+"1Mort.png";
-//        } else if(this.compteurMort == 2) {
-//            str = "/images/"+nom+"2Mort.png";
-//        } else {
-//            str = "/images/"+nom+"3Mort.png";
-//        }
-//
-//        ico = new ImageIcon(getClass().getResource(str));
-//        img = ico.getImage();
-//        return img;
-//
-//    }
-//
+    public TextureRegion mortImg(String nom, float deltaTime) {
+        String str;
+        TextureRegion texture;
+
+        this.accumulatorTime = this.accumulatorTime + deltaTime;
+
+        if(this.accumulatorTime >= 0.15) {
+            this.compteurMort++;
+            this.accumulatorTime = 0;
+        }
+
+        if(this.compteurMort == 1) {
+            str = nom+"1Mort";
+        } else if(this.compteurMort == 2) {
+            str = nom+"2Mort";
+        } else {
+            str = nom+"3Mort";
+        }
+        texture = textureAtlas.findRegion(str);
+        return texture;
+    }
+
     public void deplacement() {
         if(Main.scene.getxPos() >= 0) {this.x = this.x - Main.scene.getDx();}
     }
@@ -224,7 +228,7 @@ public class Personnages {
     }
 
     public boolean proche(Personnages personnage) {
-        if((this.x > personnage.getX() - 10 && this.x < personnage.getX() + personnage.getHauteur() + 10) || (this.x + this.largeur > personnage.getX() - 10 && this.x +this.largeur < personnage.getX() + personnage.getLargeur() + 10)) {
+        if((this.x > personnage.getX() - 5 && this.x < personnage.getX() + personnage.getHauteur() + 5) || (this.x + this.largeur > personnage.getX() - 5 && this.x +this.largeur < personnage.getX() + personnage.getLargeur() + 5)) {
             return true;
         } else {
             return false;

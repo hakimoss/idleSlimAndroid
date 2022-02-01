@@ -13,7 +13,7 @@ public class Oeil extends Personnages{
     private int goldValue;
 
     public Oeil(int x, int y) {
-        super(x, y, 10, 7);
+        super(x, y, 10, 10);
 
         super.setVersDroite(false);
         super.setMarche(true);

@@ -1,30 +1,43 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.gamplay.Combat;
 import com.mygdx.game.personnages.Hero;
 import com.mygdx.game.personnages.Oeil;
 import com.mygdx.game.personnages.Personnages;
 
 import java.util.ArrayList;
 
+import javax.swing.JProgressBar;
+
 public class Scene implements Screen {
+
 
     //scene
     private Camera camera;
     private Viewport viewport;
     //graphics
     private SpriteBatch batch;
-    private TextureAtlas textureAtlas;
+    public TextureAtlas textureAtlas;
 
-    private TextureRegion background;
+    public TextureRegion background;
+    private TextureRegion backgrounMenu1;
+    private TextureRegion backgrounMenu2;
+    private TextureRegion backgrounMenu3;
+    private TextureRegion backgrounMenu4;
+    private TextureRegion backgrounMenu5;
     //timing
     private float backgroundsOffset = 0;
     private float backgroundsMaxScrollingSpeed;
@@ -47,15 +60,23 @@ public class Scene implements Screen {
     public float xFond1;
     public float xFond2;
 
+    public LoadingScreen ld;
+
+
+    BitmapFont font;
+
     Scene() {
+
         camera = new OrthographicCamera();
         viewport = new StretchViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
 
+
+        ld = new LoadingScreen();
         this.dx = 0;
         this.xPos = -1;
         this.stage = 1;
         this.xFond1 = 0;
-        this.xFond2 = 0 + WORLD_WIDTH;
+        this.xFond2 = 0 + (WORLD_WIDTH);
 
         //set up the texture atlas
         textureAtlas = new TextureAtlas("images.atlas");
@@ -63,6 +84,13 @@ public class Scene implements Screen {
         background = new TextureRegion();
 
         background = textureAtlas.findRegion("stageForest");
+
+        backgrounMenu1 = textureAtlas.findRegion("menu1");
+        backgrounMenu2 = textureAtlas.findRegion("menu2");
+        backgrounMenu3 = textureAtlas.findRegion("menu3");
+        backgrounMenu4 = textureAtlas.findRegion("menu4");
+        backgrounMenu5 = textureAtlas.findRegion("menu5");
+
 
         backgroundsMaxScrollingSpeed = (float) (WORLD_WIDTH) / 8;
 
@@ -76,7 +104,8 @@ public class Scene implements Screen {
             setMonster();
         }
 
-
+        font = new BitmapFont();
+        prepareHUD();
         batch = new SpriteBatch();
 
     }
@@ -103,75 +132,134 @@ public class Scene implements Screen {
     public void setStage(int stage) {this.stage = stage;}
 
 
-
-
-
     public void render(float deltaTime) {
         batch.begin();
 
         //scrolling background
-        this.deplacementFond();
-        //renderBackground(deltaTime);
-
-        //render hero
-        if(this.hero.isVivant() == true) {
-            if(this.hero.isEnCombat() == true) {
-                batch.draw(hero.combatImg("hero", deltaTime), 0, 95, 10, 7);
-                for (int i = 0; i < tabEnemi.size(); i++) {
-                    if(this.hero.proche(this.tabEnemi.get(i)) == true && this.tabEnemi.get(i).isVivant() == true) {
-                        //montrer les pv de l'enemi
-                        //g2.drawString(""+this.tabEnemi.get(i).getHealth() , 135, 180);
-                    }
-                }
-            } else {
-                batch.draw(hero.marche("hero", deltaTime), 0, 95, 10, 7);
-            }
-        } else {
-//            g2.drawImage(this.hero.mortImg("hero", 200), 50, 183, null);
-//            Main.changeScreentoLoading();
-        }
+        deplacementFond();
 
         //render Oeil
-        for (int i = 0; i < tabEnemi.size(); i++) {
-            if(this.tabEnemi.get(i).isVivant() == true) {
-                System.out.println("vie oeil : " + tabEnemi.get(i).getHealth());
+        renderEnemi(deltaTime);
 
-                batch.draw(tabEnemi.get(i).marche("oeil", deltaTime), tabEnemi.get(i).getX(), tabEnemi.get(i).getY(), 10, 7);
-            } else {
-                //mort
-                batch.draw(tabEnemi.get(i).marche("oeil", deltaTime), tabEnemi.get(i).getX(), tabEnemi.get(i).getY(), 10, 7);
-            }
+        //render hero
+        renderHero(deltaTime);
+
+        //loading
+        if(this.getxPos() >= (WORLD_WIDTH*2)) {
+            batch.draw(ld.gainPercent(), 0, WORLD_HEIGHT / 1.5f, WORLD_WIDTH, WORLD_HEIGHT / 3);
         }
-        System.out.println("vie hero : " + this.hero.getHealth());
 
         //contact entre le hero et les enemi
+        contactEtFight();
+
+        //HUD
+        menuScene();
+
+        batch.end();
+    }
+
+    public void menuScene() {
+        batch.draw(backgrounMenu1, 0, 0, WORLD_WIDTH, ((WORLD_HEIGHT / 3) * 2));
+
+    }
+
+    private void prepareHUD() {
+        //create a BitmapFont from font file
+        FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("prstart.ttf"));
+
+        FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        fontParameter.size = 82;
+        //fontParameter.borderWidth = 3.6f;
+        fontParameter.color = new Color(1,1,1,0.8f);
+        //fontParameter.borderColor = new Color(0,0,0,1);
+
+
+        font = fontGenerator.generateFont(fontParameter);
+
+        //scale the font to fit world
+        font.getData().setScale(0.03f);
+
+        //calculate hud marins, etc.
+//        hudVerticalMargin = font.getCapHeight() / 2;
+//        hudLeftX = hudVerticalMargin;
+//        hudRightX = WORLD_WIDTH * 2 / 3 - hudLeftX;
+//        hudCenterX = WORLD_WIDTH / 3;
+//        hudRow1Y = WORLD_HEIGHT - hudVerticalMargin;
+//        hudRow2Y = hudRow1Y - hudVerticalMargin - font.getCapHeight();
+//        hudSectionWidth = WORLD_WIDTH / 3;
+
+
+
+    }
+
+
+
+    public void contactEtFight() {
         for(int i = 0; i < tabEnemi.size(); i++) {
             if(this.hero.proche(this.tabEnemi.get(i))) {
-                this.hero.contact(this.tabEnemi.get(i), deltaTime);
+                this.hero.contact(this.tabEnemi.get(i));
                 if(this.tabEnemi.get(i).isVivant() == false) {
                     this.hero.setLibre(true);
                 }
 
             }
         }
-
-        batch.end();
     }
+
+
 
     public void deplacementFond() {
 
         if(this.xFond1 <= -WORLD_WIDTH) {this.xFond1 = WORLD_WIDTH;}
         else if(this.xFond2 <= -WORLD_WIDTH) {this.xFond2 = WORLD_WIDTH;}
 
-        if(this.xPos >= 0 && this.xPos <= WORLD_WIDTH) {
+        if(this.xPos >= 0 && this.xPos <= (WORLD_WIDTH*2)) {
             this.xPos = this.xPos + this.dx;
             this.xFond1 = this.xFond1 - this.dx;
             this.xFond2 = this.xFond2 - this.dx;
         }
+
+        if(this.getxPos() >= (WORLD_WIDTH*2) /* || this.golem.getHealth() <=0 */) {
+            System.out.println("changement de menu");
+            //Main.changeScreentoLoading();
+
+
+
+            System.out.println("percent Scene : " + ld.percent );
+
+
+
+
+            if(ld.percent >= 5) {
+                this.xPos = -1;
+                stage++;
+                hero.setStageMax(hero.getStageMax() + 1);
+                ld.percent = 0;
+            }
+
+
+            if(this.stage != 10) {
+                setMonster();
+            } else {
+               // setGolem();
+            }
+            if(this.hero.getStageMax() > 10) {
+//                icoFond1 = new ImageIcon(getClass().getResource("/images/stageLava.png"));
+//                imgFond1 = icoFond1.getImage();
+//                imgFond2 = icoFond1.getImage();
+            }
+
+            //this.golem.setHealth(100);
+        } else {
+            batch.draw(background, this.xFond1, WORLD_HEIGHT / 1.5f, WORLD_WIDTH, WORLD_HEIGHT / 3);
+            batch.draw(background, this.xFond2, WORLD_HEIGHT / 1.5f, WORLD_WIDTH, WORLD_HEIGHT / 3);
+        }
+
         if(this.xPos == -1) {
             this.xPos = 0;
         }
-        if(this.xPos >= 0 && this.xPos <= 800) {
+        if(this.xPos >= 0 && this.xPos <= (WORLD_WIDTH*2)) {
             for(int i = 0; i < tabEnemi.size(); i++) {
                 this.tabEnemi.get(i).deplacement();
             }
@@ -185,21 +273,39 @@ public class Scene implements Screen {
             this.hero.setMarche(false);
             this.setDx(0);
         }
-        batch.draw(background, this.xFond1, WORLD_HEIGHT / 1.5f, WORLD_WIDTH, WORLD_HEIGHT / 3);
-        batch.draw(background, this.xFond2, WORLD_HEIGHT / 1.5f, WORLD_WIDTH, WORLD_HEIGHT / 3);
+
 
 
     }
 
-    private void renderBackground(float deltaTime) {
-        backgroundsOffset += deltaTime * backgroundsMaxScrollingSpeed;
-        if (backgroundsOffset > WORLD_WIDTH) {
-            backgroundsOffset = 0;
+    private void renderHero(float deltaTime) {
+
+        if(this.hero.isVivant() == true) {
+            if(this.hero.isEnCombat() == true) {
+                batch.draw(hero.combatImg("hero", deltaTime), 0, 95, 10, 7);
+                for (int i = 0; i < tabEnemi.size(); i++) {
+                    if(this.hero.proche(this.tabEnemi.get(i)) == true && this.tabEnemi.get(i).isVivant() == true) {
+                        //montrer les pv de l'enemi
+                        font.draw(batch, ""+this.tabEnemi.get(i).getHealth(), 15, 105, 0.5f, 1, false);
+                    }
+                }
+            } else {
+                batch.draw(hero.marche("hero", deltaTime), 0, 95, 10, 7);
+            }
+        } else {
+//            g2.drawImage(this.hero.mortImg("hero", 200), 50, 183, null);
+//            Main.changeScreentoLoading();
         }
-        batch.draw(background, -backgroundsOffset, WORLD_HEIGHT / 1.5f, WORLD_WIDTH, WORLD_HEIGHT / 3);
-        batch.draw(background, -backgroundsOffset + WORLD_WIDTH, WORLD_HEIGHT / 1.5f, WORLD_WIDTH, WORLD_HEIGHT / 3);
-        if(this.xPos >= 0 && this.xPos <= WORLD_WIDTH) {
-            this.xPos = this.xPos + this.dx;
+    }
+
+    public void renderEnemi(float deltaTime) {
+        for (int i = 0; i < tabEnemi.size(); i++) {
+            if(this.tabEnemi.get(i).isVivant() == true) {
+                batch.draw(tabEnemi.get(i).marche("oeil", deltaTime), tabEnemi.get(i).getX(), tabEnemi.get(i).getY(), 10, 7);
+            } else {
+                //mort
+                batch.draw(tabEnemi.get(i).mortImg("oeil", deltaTime), tabEnemi.get(i).getX(), tabEnemi.get(i).getY(), 10, 7);
+            }
         }
     }
 
@@ -210,72 +316,72 @@ public class Scene implements Screen {
             oeil1.setGoldValue(oeil1.getGoldValue() + this.stage);
             oeil1.setDmg(oeil1.getDmg() * this.stage);
 
-//            oeil2=new Oeil(200, 95);
-//            oeil2.setHealth(oeil2.getHealth() * this.stage);
-//            oeil2.setGoldValue(oeil2.getGoldValue() + this.stage);
-//            oeil2.setDmg(oeil2.getDmg() * this.stage);
-//            oeil2.compteurMarche = 2;
-//
-//            oeil3=new Oeil(300, 175);
-//            oeil3.setHealth(oeil3.getHealth() * this.stage);
-//            oeil3.setGoldValue(oeil3.getGoldValue() + this.stage);
-//            oeil3.setDmg(oeil3.getDmg() * this.stage);
-//            oeil3.compteurMarche = 1;
-//
-//            oeil4=new Oeil(400, 175);
-//            oeil4.setHealth(oeil4.getHealth() * this.stage);
-//            oeil4.setGoldValue(oeil4.getGoldValue() + this.stage);
-//            oeil4.setDmg(oeil4.getDmg() * this.stage);
-//            oeil4.compteurMarche = 3;
-//
-//            oeil5=new Oeil(500, 175);
-//            oeil5.setHealth(oeil5.getHealth() * this.stage);
-//            oeil5.setGoldValue(oeil5.getGoldValue() + this.stage);
-//            oeil5.setDmg(oeil5.getDmg() * this.stage);
-//            oeil5.compteurMarche = 1;
-//
-//            oeil6=new Oeil(550, 175);
-//            oeil6.setHealth(oeil6.getHealth() * this.stage);
-//            oeil6.setGoldValue(oeil6.getGoldValue() + this.stage);
-//            oeil6.setDmg(oeil6.getDmg() * this.stage);
-//            oeil6.compteurMarche = 0;
-//
-//            oeil7=new Oeil(590, 175);
-//            oeil7.setHealth(oeil7.getHealth() * this.stage);
-//            oeil7.setGoldValue(oeil7.getGoldValue() + this.stage);
-//            oeil7.setDmg(oeil7.getDmg() * this.stage);
-//            oeil7.compteurMarche = 2;
-//
-//            oeil8=new Oeil(620, 175);
-//            oeil8.setHealth(oeil8.getHealth() * this.stage);
-//            oeil8.setGoldValue(oeil8.getGoldValue() + this.stage);
-//            oeil8.setDmg(oeil8.getDmg() * this.stage);
-//            oeil8.compteurMarche = 0;
-//
-//            oeil9=new Oeil(690, 175);
-//            oeil9.setHealth(oeil9.getHealth() * this.stage);
-//            oeil9.setGoldValue(oeil9.getGoldValue() + this.stage);
-//            oeil9.setDmg(oeil9.getDmg() * this.stage);
-//            oeil9.compteurMarche = 3;
-//
-//            oeil10=new Oeil(720, 175);
-//            oeil10.setHealth(oeil10.getHealth() * this.stage);
-//            oeil10.setGoldValue(oeil10.getGoldValue() + this.stage);
-//            oeil10.setDmg(oeil10.getDmg() * this.stage);
-//            oeil10.compteurMarche = 1;
+            oeil2=new Oeil(35, 95);
+            oeil2.setHealth(oeil2.getHealth() * this.stage);
+            oeil2.setGoldValue(oeil2.getGoldValue() + this.stage);
+            oeil2.setDmg(oeil2.getDmg() * this.stage);
+            oeil2.compteurMarche = 2;
+
+            oeil3=new Oeil(50, 95);
+            oeil3.setHealth(oeil3.getHealth() * this.stage);
+            oeil3.setGoldValue(oeil3.getGoldValue() + this.stage);
+            oeil3.setDmg(oeil3.getDmg() * this.stage);
+            oeil3.compteurMarche = 1;
+
+            oeil4=new Oeil(62, 95);
+            oeil4.setHealth(oeil4.getHealth() * this.stage);
+            oeil4.setGoldValue(oeil4.getGoldValue() + this.stage);
+            oeil4.setDmg(oeil4.getDmg() * this.stage);
+            oeil4.compteurMarche = 3;
+
+            oeil5=new Oeil(71, 95);
+            oeil5.setHealth(oeil5.getHealth() * this.stage);
+            oeil5.setGoldValue(oeil5.getGoldValue() + this.stage);
+            oeil5.setDmg(oeil5.getDmg() * this.stage);
+            oeil5.compteurMarche = 1;
+
+            oeil6=new Oeil(82, 95);
+            oeil6.setHealth(oeil6.getHealth() * this.stage);
+            oeil6.setGoldValue(oeil6.getGoldValue() + this.stage);
+            oeil6.setDmg(oeil6.getDmg() * this.stage);
+            oeil6.compteurMarche = 0;
+
+            oeil7=new Oeil(91, 95);
+            oeil7.setHealth(oeil7.getHealth() * this.stage);
+            oeil7.setGoldValue(oeil7.getGoldValue() + this.stage);
+            oeil7.setDmg(oeil7.getDmg() * this.stage);
+            oeil7.compteurMarche = 2;
+
+            oeil8=new Oeil(104, 95);
+            oeil8.setHealth(oeil8.getHealth() * this.stage);
+            oeil8.setGoldValue(oeil8.getGoldValue() + this.stage);
+            oeil8.setDmg(oeil8.getDmg() * this.stage);
+            oeil8.compteurMarche = 0;
+
+            oeil9=new Oeil(112, 95);
+            oeil9.setHealth(oeil9.getHealth() * this.stage);
+            oeil9.setGoldValue(oeil9.getGoldValue() + this.stage);
+            oeil9.setDmg(oeil9.getDmg() * this.stage);
+            oeil9.compteurMarche = 3;
+
+            oeil10=new Oeil(120, 95);
+            oeil10.setHealth(oeil10.getHealth() * this.stage);
+            oeil10.setGoldValue(oeil10.getGoldValue() + this.stage);
+            oeil10.setDmg(oeil10.getDmg() * this.stage);
+            oeil10.compteurMarche = 1;
 
             tabEnemi=new ArrayList<Personnages>();
 
             tabEnemi.add(oeil1);
-//            tabEnemi.add(oeil2);
-//            tabEnemi.add(oeil3);
-//            tabEnemi.add(oeil4);
-//            tabEnemi.add(oeil5);
-//            tabEnemi.add(oeil6);
-//            tabEnemi.add(oeil7);
-//            tabEnemi.add(oeil8);
-//            tabEnemi.add(oeil9);
-//            tabEnemi.add(oeil10);
+            tabEnemi.add(oeil2);
+            tabEnemi.add(oeil3);
+            tabEnemi.add(oeil4);
+            tabEnemi.add(oeil5);
+            tabEnemi.add(oeil6);
+            tabEnemi.add(oeil7);
+            tabEnemi.add(oeil8);
+            tabEnemi.add(oeil9);
+            tabEnemi.add(oeil10);
 
         } else if (this.stage > 10) {
 //            flamme=new Flamme(150, 170);
@@ -352,6 +458,10 @@ public class Scene implements Screen {
         }
 
     }
+
+
+
+
 
     @Override
     public void resize(int width, int height) {

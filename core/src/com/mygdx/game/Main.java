@@ -1,11 +1,19 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import javax.swing.SwingUtilities;
+
 
 
 public class Main extends Game {
 
 	public static Scene scene;
+
+
 
 
 	@Override
@@ -28,4 +36,6 @@ public class Main extends Game {
 	public void resize(int width, int height) {
 		scene.resize(width, height);
 	}
+
+
 }
